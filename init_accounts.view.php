@@ -1,6 +1,6 @@
 <?php
 // Pre-Load
-require_once("InitAccounts.service.php");
+require_once("./services/InitAccounts.service.php");
 function checkHasNewAccount()
 {
     return isset($_POST['acc_name']) && isset($_POST['acc_init_money']);

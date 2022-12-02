@@ -1,5 +1,5 @@
 <?php
-require_once('repository.php');
+require_once(__DIR__.'/../repositories/repository.php');
 
 
 class RevenuesService{

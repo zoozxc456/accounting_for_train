@@ -2,7 +2,7 @@
 
 use function PHPSTORM_META\type;
 
-require_once('Revenues.service.php');
+require_once('./services/Revenues.service.php');
 $revenuesService = new RevenuesService();
 $revenues = $revenuesService->getAllRevenues();
 ?>
