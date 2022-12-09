@@ -19,7 +19,6 @@ class BasicRepository
     }
 }
 
-
 class AccountRepository extends BasicRepository
 {
     public function getAllAccounts()
@@ -37,6 +36,32 @@ class AccountRepository extends BasicRepository
         mysqli_query($this->__dbLink, $cmd);
         $affect_rows = mysqli_affected_rows($this->__dbLink);
         return $affect_rows==1;
+    }
+
+    public function getInitMoneyById($account_id){
+        $cmd = "SELECT init_money FROM accounts WHERE account_id ={$account_id}";
+        $results = mysqli_query($this->__dbLink,$cmd);
+        $accounts = mysqli_fetch_all($results);
+        $account = $accounts[0];
+        $initMoney = $account[0];
+        return $initMoney;
+    }
+
+    public function getBalanceById($account_id){
+        $cmd = "SELECT balance FROM accounts WHERE account_id ={$account_id}";
+        $results = mysqli_query($this->__dbLink,$cmd);
+        $accounts = mysqli_fetch_all($results);
+        $account = $accounts[0];
+        $balance = $account[0];
+        return $balance;
+    }
+
+    public function updateAccount($accName,$init_money,$newBalance,$acc_id){
+        $cmd ="UPDATE accounts SET account_name='{$accName}',init_money={$init_money},balance={$newBalance}
+         WHERE account_id={$acc_id}";
+        mysqli_query($this->__dbLink, $cmd);
+        $affect_rows = mysqli_affected_rows($this->__dbLink);
+        return $affect_rows>0;
     }
 }
 
