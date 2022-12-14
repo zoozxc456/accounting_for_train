@@ -17,7 +17,11 @@ function checkHasUpdateEvent()
 function checkHasDeleteEvent()
 {
     return (isset($_POST['event'])) &&
-    ($_POST['event'] == "delete");
+        ($_POST['event'] == "delete");
+}
+function buildAlertScript($message)
+{
+    echo "<script>alert('{$message}');</script>";
 }
 ?>
 
@@ -35,23 +39,24 @@ if ($hasUpdateEvent) {
     $acc_id = $_POST['acc_id'];
     $isUpdateSuccess =  $initAccountsService->updateAccount($accName, $init_money, $acc_id);
     if ($isUpdateSuccess) {
-        header("Refresh:0");
+        buildAlertScript("更新帳戶成功");
     } else {
-        echo "更新帳戶失敗";
+        buildAlertScript("更新帳戶失敗");
     }
+    header("Refresh:0");
 }
 
 $hasDeleteEvent = checkHasDeleteEvent();
-if ($hasDeleteEvent){
+if ($hasDeleteEvent) {
     $accName = $_POST['account_name'];
     $isDeleteSuccess = $initAccountsService->deleteAccount($accName);
     if ($isDeleteSuccess) {
-        header("Refresh:0");
+        buildAlertScript("刪除帳戶成功");
     } else {
-        echo "刪除帳戶失敗";
+        buildAlertScript("刪除帳戶失敗");
     }
+    header("Refresh:0");
 }
-
 
 $hasNewAccount = checkHasNewAccount();
 if ($hasNewAccount) {
@@ -61,15 +66,13 @@ if ($hasNewAccount) {
     if ($isValid) {
         $isCreateAccountSuccess = $initAccountsService->addNewAccount($newAccName, $newAccInitMoney);
         if ($isCreateAccountSuccess) {
-            header("Refresh:0");
+            buildAlertScript("新增帳戶成功");
         } else {
-            echo "新增帳戶失敗";
+            buildAlertScript("新增帳戶失敗");
         }
+        header("Refresh:0");
     }
 }
-
-
-
 ?>
 
 
