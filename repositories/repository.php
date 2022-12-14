@@ -63,6 +63,13 @@ class AccountRepository extends BasicRepository
         $affect_rows = mysqli_affected_rows($this->__dbLink);
         return $affect_rows>0;
     }
+
+    public function deleteAccount($accName){
+        $cmd = "DELETE FROM accounts WHERE account_name = '{$accName}'";
+        mysqli_query($this->__dbLink,$cmd);
+        $affect_rows = mysqli_affected_rows($this->__dbLink);
+        return $affect_rows>0;
+    }
 }
 
 class RevenuesRepository extends BasicRepository

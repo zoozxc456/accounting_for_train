@@ -14,7 +14,11 @@ function checkHasUpdateEvent()
     return (isset($_POST['event'])) &&
         ($_POST['event'] == "update");
 }
-
+function checkHasDeleteEvent()
+{
+    return (isset($_POST['event'])) &&
+    ($_POST['event'] == "delete");
+}
 ?>
 
 <?php
@@ -30,12 +34,24 @@ if ($hasUpdateEvent) {
     $init_money = $_POST['init_money'];
     $acc_id = $_POST['acc_id'];
     $isUpdateSuccess =  $initAccountsService->updateAccount($accName, $init_money, $acc_id);
-    if($isUpdateSuccess ){
+    if ($isUpdateSuccess) {
         header("Refresh:0");
     } else {
         echo "更新帳戶失敗";
     }
 }
+
+$hasDeleteEvent = checkHasDeleteEvent();
+if ($hasDeleteEvent){
+    $accName = $_POST['account_name'];
+    $isDeleteSuccess = $initAccountsService->deleteAccount($accName);
+    if ($isDeleteSuccess) {
+        header("Refresh:0");
+    } else {
+        echo "刪除帳戶失敗";
+    }
+}
+
 
 $hasNewAccount = checkHasNewAccount();
 if ($hasNewAccount) {

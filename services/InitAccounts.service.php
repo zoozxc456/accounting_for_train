@@ -27,7 +27,13 @@ class InitAccountService
         $oldBalance = $this->_accountRepository->getBalanceById($acc_id);
         $delta = $new_init_money - $oldInitMoney;
         $newBalance = $oldBalance + $delta;
-       $isUpdateSuccess =  $this->_accountRepository->updateAccount($accName,$new_init_money,$newBalance,$acc_id);
-       return $isUpdateSuccess;
+        $isUpdateSuccess = $this->_accountRepository->updateAccount($accName, $new_init_money, $newBalance, $acc_id);
+        return $isUpdateSuccess;
+    }
+
+    public function deleteAccount($accName)
+    {
+        $isDeleteSuccess = $this->_accountRepository->deleteAccount($accName);
+        return $isDeleteSuccess;
     }
 }
