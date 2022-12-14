@@ -28,10 +28,6 @@ class InitAccountService
         $delta = $new_init_money - $oldInitMoney;
         $newBalance = $oldBalance + $delta;
        $isUpdateSuccess =  $this->_accountRepository->updateAccount($accName,$new_init_money,$newBalance,$acc_id);
-       if($isUpdateSuccess){
-        echo "更新成功";
-       }else{
-        echo "更新失敗";
-       }
+       return $isUpdateSuccess;
     }
 }

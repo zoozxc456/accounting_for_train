@@ -11,8 +11,8 @@ function verifyNewAccountFormat($accName, $accInitMoney)
 }
 function checkHasUpdateEvent()
 {
-    return (isset($_POST['event_type'])) &&
-        ($_POST['event_type'] == "update");
+    return (isset($_POST['event'])) &&
+        ($_POST['event'] == "update");
 }
 
 ?>
@@ -21,12 +21,20 @@ function checkHasUpdateEvent()
 $initAccountsService = new InitAccountService();
 $accounts = $initAccountsService->getAllAccounts();
 
+
+echo isset($_POST['event']) ? $_POST['event'] : "";
+
 $hasUpdateEvent = checkHasUpdateEvent();
 if ($hasUpdateEvent) {
     $accName = $_POST['account_name'];
     $init_money = $_POST['init_money'];
     $acc_id = $_POST['acc_id'];
-    $initAccountsService->updateAccount($accName,$init_money,$acc_id);
+    $isUpdateSuccess =  $initAccountsService->updateAccount($accName, $init_money, $acc_id);
+    if($isUpdateSuccess ){
+        header("Refresh:0");
+    } else {
+        echo "更新帳戶失敗";
+    }
 }
 
 $hasNewAccount = checkHasNewAccount();
@@ -63,7 +71,7 @@ if ($hasNewAccount) {
             <th>帳戶名稱</th>
             <th>帳戶初始金額</th>
             <th>帳戶現在餘額</th>
-            <th>動作</th>
+            <th colspan="2">動作</th>
         </tr>
         <?php
         foreach ($accounts as $account) { ?>
@@ -72,10 +80,10 @@ if ($hasNewAccount) {
                     <td><input name="account_name" value=<?php echo $account[1]; ?> /></td>
                     <td><input name="init_money" value=<?php echo $account[2]; ?> /></td>
                     <td><input name="balance" value=<?php echo $account[3]; ?> /></td>
-                    <td><button type="submit">修改</button></td>
+                    <td><button type="submit" name="event" value="update">修改</button></td>
+                    <td><button type="submit" name="event" value="delete">刪除</button></td>
                 </tr>
                 <input type="hidden" name="acc_id" value=<?php echo $account[0]; ?> />
-                <input type="hidden" name="event_type" value="update" />
             </form>
         <?php } ?>
 
